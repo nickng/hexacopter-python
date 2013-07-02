@@ -1,6 +1,7 @@
 """Example application that outputs accelerometer, compass and gyro readings.
 """
 
+from robovero.lpc17xx_gpio import GPIO_SetDir, GPIO_ClearValue
 from robovero.extras import Array, roboveroConfig
 from robovero.lpc17xx_i2c import I2C_M_SETUP_Type, I2C_MasterTransferData, \
                             I2C_TRANSFER_OPT_Type
@@ -96,6 +97,10 @@ class I2CDevice(object):
 
 # Initialize pin select registers
 roboveroConfig()
+
+# Patch for I2C
+GPIO_SetDir(1, 1, 1)
+GPIO_ClearValue(1, 1)
 
 # configure accelerometer
 accelerometer = I2CDevice(0x18)

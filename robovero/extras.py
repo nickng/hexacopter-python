@@ -75,3 +75,24 @@ def registerCallback(IRQn, function):
   Pass the IRQ number and function to call when an interrupt occurs.
   """
   isr_list[IRQn] = function
+
+def PWM_SetSpeed(PWMChannel, PWMPeriod, PWMBasePeriod):
+    """This function sets the PWM channel to output specified PWM wave
+
+   Note:
+    - All channels must use same base period since they share
+   PWM0's counter as base period.
+   - You can set all six pwm channels to output different duty cycles.
+
+   Example: to output wave of 2000us period and set 1500us of the
+   period to logic one to hold a neutral position for angle servo
+   for channel 2.
+
+    PWMChannel: 1-6, the PWM channel number.
+    PWMPeriod:  the time for the chnnel to output logic one in each cycle, in us.
+    PWMBasePeriod: the period of each cycle, in us.
+    """
+    return robocaller("PWM_SetSpeed", "void", PWMChannel, PWMPeriod, PWMBasePeriod)
+
+def PWM_CounterState(PWMChannel, NewState):
+    return robocaller("PWM_CounterState", "void", PWMChannel, NewState)

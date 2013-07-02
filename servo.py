@@ -9,7 +9,7 @@ from robovero.lpc17xx_pwm import PWM_TC_MODE_OPT, \
 					PWM_MATCH_UPDATE_OPT, PWM_MATCHCFG_Type, \
 					PWM_MatchUpdate, PWM_ConfigMatch, PWM_ChannelCmd, \
 					PWM_ResetCounter, PWM_CounterCmd, PWM_Cmd
-from robovero.extras import roboveroConfig, initMatch
+from robovero.extras import roboveroConfig, initMatch, PWM_CounterState
 from robovero.lpc_types import FunctionalState
 
 from robovero.arduino import analogWrite, PWM1
@@ -51,10 +51,7 @@ def initPWM():
 	# Set the pulse width to 1.5ms
 	initPulse(1, 1500)
 	
-	PWM_ChannelCmd(LPC_PWM1, 1, FunctionalState.ENABLE)
-	PWM_ResetCounter(LPC_PWM1)
-	PWM_CounterCmd(LPC_PWM1, FunctionalState.ENABLE)
-	PWM_Cmd(LPC_PWM1, FunctionalState.ENABLE)
+	PWM_CounterState(LPC_PWM1, FunctionalState.ENABLE)
 
 # Entry Point
 roboveroConfig()
@@ -64,6 +61,3 @@ while True:
 	match_value = getServoAngle()
 	if match_value:
 		PWM_MatchUpdate(LPC_PWM1, 1, match_value, PWM_MATCH_UPDATE_OPT.PWM_MATCH_UPDATE_NOW)
-		
-
-
